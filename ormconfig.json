@@ -6,7 +6,7 @@
   "type": "postgres",
   "host": "localhost",
   "port": 5432,
-  "database": "fin_api",
+  "database": "fin_db",
   "entities": [
     "./src/modules/**/entities/*.ts"
   ],
