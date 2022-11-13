@@ -1,15 +1,10 @@
-import { Connection, createConnection, getConnectionOptions } from "typeorm";
+import { ConnectionOptions, createConnection, getConnectionOptions } from 'typeorm';
 
-export default async (host = "database_ignite"): Promise<Connection> => {
-  const defaultOptions = await getConnectionOptions();
+export default async (host = 'database') => {
+  const defaultOptions = await getConnectionOptions()
 
-  return createConnection(
-    Object.assign(defaultOptions, {
-      host: process.env.NODE_ENV === "test" ? "localhost" : host,
-      database:
-        process.env.NODE_ENV === "test"
-          ? "fin_test"
-          : defaultOptions.database,
-    })
-  );
-};
+  return createConnection({
+    ...defaultOptions,
+    host: process.env.NODE_ENV === 'test' ? 'localhost' : host,
+  } as ConnectionOptions)
+}

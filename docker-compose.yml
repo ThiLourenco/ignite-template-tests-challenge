@@ -19,7 +19,7 @@ services:
     container_name: fin_api
     restart: always
     ports:
-      - 3334:3334
+      - 3333:3333
       - 9229:9229
     volumes:
       - .:/usr/app

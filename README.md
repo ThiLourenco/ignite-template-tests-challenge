@@ -22,10 +22,10 @@ A rota recebe `name`, `email` e `password` dentro do corpo da requisição, salv
 
 A rota recebe `email` e `password` no corpo da requisição e retorna os dados do usuário autenticado junto à um token JWT.
 
-<aside>
+<em>
 💡 Essa aplicação não possui refresh token, ou seja, o token criado dura apenas 1 dia e deve ser recriado após o período mencionado.
 
-</aside>
+</em>
 
 ### GET `/api/v1/profile`
 
