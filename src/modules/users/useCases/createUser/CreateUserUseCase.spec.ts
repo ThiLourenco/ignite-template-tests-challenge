@@ -5,34 +5,36 @@ import { ICreateUserDTO } from "./ICreateUserDTO";
 
 let createUserUseCase: CreateUserUseCase;
 let usersRepositoryInMemory: InMemoryUsersRepository;
+let newUser: ICreateUserDTO;
 
 describe("Create User", () => {
+  beforeAll(() => {
+    newUser = {
+      name: "John Doe",
+      email: "johndoe@admin.com",
+      password: "1234",
+    };
+  });
+
   beforeEach(() => {
     usersRepositoryInMemory = new InMemoryUsersRepository();
     createUserUseCase = new CreateUserUseCase(usersRepositoryInMemory);
   });
 
   it("should be able to create new user", async () => {
-    const result = await createUserUseCase.execute({
-      name: "John Doe",
-      email: "johndoe@admin.com",
-      password: "1234",
-    });
+    await createUserUseCase.execute(newUser);
 
-    expect(result).toHaveProperty("id");
+    const createdUser = await usersRepositoryInMemory.findByEmail(
+      newUser.email
+    );
+    expect(createdUser).toHaveProperty("id");
   });
 
   it("should not be able to create new user when email is already taken", async () => {
+    await createUserUseCase.execute(newUser);
+
     expect(async () => {
-      const user: ICreateUserDTO = {
-        name: "Jane Doe",
-        email: "Jane@admin.com",
-        password: "123456",
-      }
-
-      await createUserUseCase.execute(user);
-
-      await createUserUseCase.execute(user);
+      await createUserUseCase.execute(newUser);
     }).rejects.toBeInstanceOf(AppError);
   });
-})
+});
